@@ -504,7 +504,7 @@ const scenarios = {
                         <strong>1. Loading & Pickup</strong><br>
                         <strong>Date/Time:</strong> Jan 15, 2026 09:23 AM PST<br>
                         <strong>Location:</strong> 1918 8th Ave, Seattle, WA 98101<br>
-                        <img src="https://maps.googleapis.com/maps/api/staticmap?center=1918+8th+Ave+Seattle+WA&zoom=14&size=300x150&markers=color:red%7C1918+8th+Ave+Seattle+WA&key=AIzaSyDummy" alt="Pickup location map" style="width: 100%; max-width: 300px; margin: 0.5rem 0; border-radius: 4px;" onerror="this.style.display='none'"><br>
+                        <img src="https://staticmap.openstreetmap.de/staticmap.php?center=47.6149,-122.3386&zoom=14&size=300x150&markers=47.6149,-122.3386,red-pushpin" alt="Pickup location" style="width: 100%; max-width: 300px; margin: 0.5rem 0; border-radius: 4px; border: 1px solid #ddd;"><br>
                         <strong>Handler:</strong> Sarah Chen (Shipper) - Signature verified<br>
                         <strong>Driver:</strong> Marcus Johnson (CDL: WA-8847392) - Unit 624<br>
                         <strong>Carrier:</strong> Amazon Freight (USDOT: 3924847)<br>
@@ -548,7 +548,7 @@ const scenarios = {
                         <strong>5. Final Delivery</strong><br>
                         <strong>Date/Time:</strong> Jan 19, 2026 10:18 AM EST<br>
                         <strong>Location:</strong> 1450 Brickell Ave, Miami, FL 33131<br>
-                        <img src="https://maps.googleapis.com/maps/api/staticmap?center=1450+Brickell+Ave+Miami+FL&zoom=14&size=300x150&markers=color:green%7C1450+Brickell+Ave+Miami+FL&key=AIzaSyDummy" alt="Delivery location map" style="width: 100%; max-width: 300px; margin: 0.5rem 0; border-radius: 4px;" onerror="this.style.display='none'"><br>
+                        <img src="https://staticmap.openstreetmap.de/staticmap.php?center=25.7617,-80.1918&zoom=14&size=300x150&markers=25.7617,-80.1918,green-pushpin" alt="Delivery location" style="width: 100%; max-width: 300px; margin: 0.5rem 0; border-radius: 4px; border: 1px solid #ddd;"><br>
                         <strong>Driver:</strong> Carlos Rodriguez (CDL: FL-8392847)<br>
                         <strong>Receiver:</strong> Dr. Amanda Foster (Receiving Manager) - Signature verified<br>
                         <strong>Security:</strong> Seal #AF-28471-003 verified intact, broken at delivery<br>
