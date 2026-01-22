@@ -478,5 +478,95 @@ const scenarios = {
                 </div>
                 Your contact will receive a call 30 minutes before arrival. I've also applied a service credit to your account for the inconvenience. Is there anything else I can help with?`
         }
+    ],
+
+    custody: [
+        { type: 'user', text: 'I need a chain of custody report for order AF-28471' },
+        { type: 'ai', text: 'I can generate that for you. Let me pull the complete custody record for AF-28471...' },
+        { 
+            type: 'ai', 
+            html: `<div class="tracking-card">
+                    <h3>Chain of Custody Report</h3>
+                    <div style="margin: 0.5rem 0;"><strong>Order ID:</strong> AF-28471</div>
+                    <div><strong>Shipment ID:</strong> AMZN-SEA-2024-28471-A</div>
+                    <div><strong>Barcode:</strong> 1Z9847AF28471000</div>
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: #f0f8ff; border-radius: 4px;">
+                        <strong>Route:</strong> Seattle, WA → Miami, FL<br>
+                        <strong>Commodity:</strong> Medical Equipment (Temperature Controlled)<br>
+                        <strong>Purpose:</strong> Commercial Delivery
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1rem; font-size: 0.9rem;">
+                    <strong>CUSTODY EVENTS:</strong>
+                    
+                    <div style="margin-top: 0.75rem; padding: 0.75rem; background: #fafafa; border-left: 3px solid #0073bb; border-radius: 4px;">
+                        <strong>1. Loading & Pickup</strong><br>
+                        <strong>Date/Time:</strong> Jan 15, 2026 09:23 AM PST<br>
+                        <strong>Location:</strong> 1918 8th Ave, Seattle, WA 98101<br>
+                        <strong>Handler:</strong> Sarah Chen (Shipper) - Signature verified<br>
+                        <strong>Driver:</strong> Marcus Johnson (CDL: WA-8847392) - Unit 624<br>
+                        <strong>Carrier:</strong> Amazon Freight (USDOT: 3924847)<br>
+                        <strong>Security:</strong> Seal #AF-28471-001 applied, Temp-controlled trailer<br>
+                        <strong>Condition:</strong> 3 pallets loaded, packaging intact
+                    </div>
+                    
+                    <div style="margin-top: 0.75rem; padding: 0.75rem; background: #fafafa; border-left: 3px solid #0073bb; border-radius: 4px;">
+                        <strong>2. Hub Transfer - Seattle</strong><br>
+                        <strong>Date/Time:</strong> Jan 15, 2026 11:47 AM PST<br>
+                        <strong>Location:</strong> Amazon Freight Hub SEA7, Kent, WA<br>
+                        <strong>Handler:</strong> David Park (Hub Supervisor) - Signature verified<br>
+                        <strong>Security:</strong> Seal #AF-28471-001 verified intact, no tampering<br>
+                        <strong>Action:</strong> Cross-dock transfer to long-haul trailer<br>
+                        <strong>New Seal:</strong> #AF-28471-002 applied<br>
+                        <strong>Driver:</strong> Jennifer Martinez (CDL: TX-4729183) - Unit 892
+                    </div>
+                    
+                    <div style="margin-top: 0.75rem; padding: 0.75rem; background: #fafafa; border-left: 3px solid #0073bb; border-radius: 4px;">
+                        <strong>3. En-Route Inspection</strong><br>
+                        <strong>Date/Time:</strong> Jan 17, 2026 02:15 PM CST<br>
+                        <strong>Location:</strong> Rest Stop, Dallas, TX<br>
+                        <strong>Handler:</strong> Jennifer Martinez (Driver)<br>
+                        <strong>Security:</strong> Seal #AF-28471-002 verified intact<br>
+                        <strong>Condition:</strong> Temperature log verified (2-8°C maintained)<br>
+                        <strong>Action:</strong> Routine safety inspection, no door opening
+                    </div>
+                    
+                    <div style="margin-top: 0.75rem; padding: 0.75rem; background: #fafafa; border-left: 3px solid #0073bb; border-radius: 4px;">
+                        <strong>4. Hub Transfer - Atlanta</strong><br>
+                        <strong>Date/Time:</strong> Jan 18, 2026 08:32 AM EST<br>
+                        <strong>Location:</strong> Amazon Freight Hub ATL4, Atlanta, GA<br>
+                        <strong>Handler:</strong> Robert Williams (Hub Supervisor) - Signature verified<br>
+                        <strong>Security:</strong> Seal #AF-28471-002 verified intact, broken for inspection<br>
+                        <strong>Inspection:</strong> All 3 pallets accounted for, packaging intact<br>
+                        <strong>New Seal:</strong> #AF-28471-003 applied<br>
+                        <strong>Driver:</strong> Carlos Rodriguez (CDL: FL-8392847) - Unit 447
+                    </div>
+                    
+                    <div style="margin-top: 0.75rem; padding: 0.75rem; background: #fafafa; border-left: 3px solid #28a745; border-radius: 4px;">
+                        <strong>5. Final Delivery</strong><br>
+                        <strong>Date/Time:</strong> Jan 19, 2026 10:18 AM EST<br>
+                        <strong>Location:</strong> 1450 Brickell Ave, Miami, FL 33131<br>
+                        <strong>Driver:</strong> Carlos Rodriguez (CDL: FL-8392847)<br>
+                        <strong>Receiver:</strong> Dr. Amanda Foster (Receiving Manager) - Signature verified<br>
+                        <strong>Security:</strong> Seal #AF-28471-003 verified intact, broken at delivery<br>
+                        <strong>Condition:</strong> All 3 pallets delivered, no damage reported<br>
+                        <strong>POD:</strong> Signed delivery receipt on file
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1rem; padding: 0.75rem; background: #d4edda; border-left: 3px solid #28a745; border-radius: 4px;">
+                    <strong>✓ Chain of Custody Complete</strong><br>
+                    Total transit time: 4 days, 0 hours, 55 minutes<br>
+                    Security seals: 3 applied, all verified intact at checkpoints<br>
+                    Door openings: 2 (authorized hub transfers only)<br>
+                    Temperature compliance: 100% maintained
+                </div>
+                
+                <div style="margin-top: 1rem; font-size: 0.85rem; color: #666;">
+                    Report generated: Jan 22, 2026 02:44 PM EST<br>
+                    Full documentation including signatures and photos available upon request.
+                </div>`
+        }
     ]
 };
