@@ -395,6 +395,9 @@
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
                         const modalType = e.target.dataset.modal;
+                        if (modalType === 'booking') {
+                            document.body.style.backgroundImage = "url('BookingFlow.png')";
+                        }
                         showModal(modalType);
                     });
                 });
