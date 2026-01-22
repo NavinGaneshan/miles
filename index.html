@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Freight - AI Chat Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="data:image/jpeg;base64,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" alt="Amazon Freight" style="height: 40px;">
+            </div>
+            <div class="user-info">
+                <span>John's Logistics</span>
+                <button class="btn-secondary">Account</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <h3>Scenarios</h3>
+                <select id="scenario-selector" class="scenario-select">
+                    <option value="">Choose a scenario...</option>
+                    <option value="quote">1. Quote Request & Negotiation</option>
+                    <option value="tracking">2. Order Tracking & ETA</option>
+                    <option value="schedule">3. Schedule Pickup</option>
+                    <option value="multistop">4. Multi-Stop Quote</option>
+                    <option value="delayed">5. Delayed Order Resolution</option>
+                    <option value="reorder">6. Quick Reorder</option>
+                </select>
+
+                <h3>Quick Actions</h3>
+                <button class="quick-action" data-action="quote">Get Quote</button>
+                <button class="quick-action" data-action="track">Track Order</button>
+                <button class="quick-action" data-action="schedule">Schedule Pickup</button>
+                
+                <h3>Recent Orders</h3>
+                <div class="recent-orders">
+                    <div class="order-item" data-order="AF-29384">
+                        <div class="order-id">AF-29384</div>
+                        <div class="order-route">SEA → ATL</div>
+                        <div class="order-status in-transit">In Transit</div>
+                    </div>
+                    <div class="order-item" data-order="AF-31205">
+                        <div class="order-id">AF-31205</div>
+                        <div class="order-route">DAL → BOS</div>
+                        <div class="order-status ready">Ready to Ship</div>
+                    </div>
+                    <div class="order-item" data-order="AF-28192">
+                        <div class="order-id">AF-28192</div>
+                        <div class="order-route">CHI → MIA</div>
+                        <div class="order-status delayed">Delayed</div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="chat-container">
+                <div class="chat-header">
+                    <h2>Miles, your freight expert</h2>
+                    <button class="btn-icon" id="clear-chat">Clear</button>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message ai">
+                        <div class="message-content">
+                            Hi! I'm Miles, your Amazon Freight expert. I can help you with:
+                            <ul>
+                                <li>Getting quotes and booking shipments</li>
+                                <li>Tracking orders and checking ETAs</li>
+                                <li>Scheduling pickups</li>
+                                <li>Negotiating rates</li>
+                            </ul>
+                            What can I help you with today?
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chat-input" placeholder="Type your message..." />
+                    <button id="send-btn" class="btn-primary">Send</button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="scenarios.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

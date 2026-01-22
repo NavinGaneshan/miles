@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Freight - Miles AI Assistant Integration</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Overlay-specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        .chat-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #ff9900;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: transform 0.2s;
+        }
+
+        .chat-fab:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-fab svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+
+        .chat-overlay {
+            position: fixed;
+            top: 0;
+            right: -50%;
+            width: 50%;
+            height: 100%;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+            z-index: 999;
+            transition: right 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-overlay.open {
+            right: 0;
+        }
+
+        .chat-overlay-header {
+            background: #232f3e;
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-overlay-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            opacity: 0.8;
+        }
+
+        .chat-overlay-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #fafafa;
+            border-right: 1px solid #ddd;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .overlay-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .overlay-backdrop.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .demo-notice {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: #232f3e;
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            z-index: 1001;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-notice">
+        Demo: Click the orange button to open Miles AI Assistant
+    </div>
+
+    <!-- Backdrop -->
+    <div class="overlay-backdrop" id="backdrop"></div>
+
+    <!-- Floating Action Button -->
+    <div class="chat-fab" id="chatFab">
+        <svg viewBox="0 0 24 24">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+            <path d="M7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/>
+        </svg>
+    </div>
+
+    <!-- Chat Overlay Panel -->
+    <div class="chat-overlay" id="chatOverlay">
+        <div class="chat-overlay-header">
+            <h2>Miles, your freight expert</h2>
+            <button class="close-btn" id="closeBtn">&times;</button>
+        </div>
+        
+        <div class="chat-overlay-content">
+            <div class="sidebar">
+                <h3>Scenarios</h3>
+                <select id="scenario-selector" class="scenario-select">
+                    <option value="">Choose a scenario...</option>
+                    <option value="quote">1. Quote Request & Negotiation</option>
+                    <option value="tracking">2. Order Tracking & ETA</option>
+                    <option value="schedule">3. Schedule Pickup</option>
+                    <option value="multistop">4. Multi-Stop Quote</option>
+                    <option value="delayed">5. Delayed Order Resolution</option>
+                    <option value="reorder">6. Quick Reorder</option>
+                </select>
+
+                <h3>Quick Actions</h3>
+                <button class="quick-action" data-action="quote">Get Quote</button>
+                <button class="quick-action" data-action="track">Track Order</button>
+                <button class="quick-action" data-action="schedule">Schedule Pickup</button>
+                
+                <h3>Recent Orders</h3>
+                <div class="recent-orders">
+                    <div class="order-item" data-order="AF-29384">
+                        <div class="order-id">AF-29384</div>
+                        <div class="order-route">SEA → ATL</div>
+                        <div class="order-status in-transit">In Transit</div>
+                    </div>
+                    <div class="order-item" data-order="AF-31205">
+                        <div class="order-id">AF-31205</div>
+                        <div class="order-route">DAL → BOS</div>
+                        <div class="order-status ready">Ready to Ship</div>
+                    </div>
+                    <div class="order-item" data-order="AF-28192">
+                        <div class="order-id">AF-28192</div>
+                        <div class="order-route">CHI → MIA</div>
+                        <div class="order-status delayed">Delayed</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message ai">
+                        <div class="message-content">
+                            Hi! I'm Miles, your Amazon Freight expert. I can help you with:
+                            <ul>
+                                <li>Getting quotes and booking shipments</li>
+                                <li>Tracking orders and checking ETAs</li>
+                                <li>Scheduling pickups</li>
+                                <li>Negotiating rates</li>
+                            </ul>
+                            What can I help you with today?
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chat-input" placeholder="Type your message..." />
+                    <button id="send-btn" class="btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="scenarios.js"></script>
+    <script>
+        // Overlay-specific app logic
+        let currentScenario = null;
+        let currentStep = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatMessages = document.getElementById('chat-messages');
+            const chatInput = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('send-btn');
+            const scenarioSelector = document.getElementById('scenario-selector');
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modal-body');
+            
+            // Overlay controls
+            const chatFab = document.getElementById('chatFab');
+            const chatOverlay = document.getElementById('chatOverlay');
+            const closeBtn = document.getElementById('closeBtn');
+            const backdrop = document.getElementById('backdrop');
+
+            chatFab.addEventListener('click', () => {
+                chatOverlay.classList.add('open');
+                backdrop.classList.add('visible');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                chatOverlay.classList.remove('open');
+                backdrop.classList.remove('visible');
+            });
+
+            backdrop.addEventListener('click', () => {
+                chatOverlay.classList.remove('open');
+                backdrop.classList.remove('visible');
+            });
+
+            // Scenario selector
+            scenarioSelector.addEventListener('change', (e) => {
+                const scenarioName = e.target.value;
+                if (!scenarioName) return;
+                
+                clearChat();
+                currentScenario = scenarios[scenarioName];
+                currentStep = 0;
+                playScenario();
+            });
+
+            // Quick actions
+            document.querySelectorAll('.quick-action').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const action = e.target.dataset.action;
+                    if (action === 'quote') loadScenario('quote');
+                    if (action === 'track') loadScenario('tracking');
+                    if (action === 'schedule') loadScenario('schedule');
+                });
+            });
+
+            // Order items
+            document.querySelectorAll('.order-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const orderId = e.currentTarget.dataset.order;
+                    trackOrder(orderId);
+                });
+            });
+
+            // Modal close
+            document.querySelector('.close').addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) modal.style.display = 'none';
+            });
+
+            // Send button
+            sendBtn.addEventListener('click', handleSend);
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleSend();
+            });
+
+            function handleSend() {
+                const text = chatInput.value.trim();
+                if (!text) return;
+                
+                addMessage('user', text);
+                chatInput.value = '';
+                
+                setTimeout(() => {
+                    if (text.toLowerCase().includes('track') || text.toLowerCase().includes('af-')) {
+                        const orderId = text.match(/AF-\d+/i)?.[0];
+                        if (orderId && orders[orderId]) {
+                            showOrderTracking(orderId);
+                        } else {
+                            addMessage('ai', 'I can help you track an order. Please provide the order ID (format: AF-XXXXX).');
+                        }
+                    } else if (text.toLowerCase().includes('quote') || text.toLowerCase().includes('ship')) {
+                        addMessage('ai', 'I can help you get a quote. Where are you shipping from and to?');
+                    } else if (text.toLowerCase().includes('schedule') || text.toLowerCase().includes('pickup')) {
+                        addMessage('ai', 'I can help you schedule a pickup. Do you have an existing order ID, or would you like to create a new shipment?');
+                    } else {
+                        addMessage('ai', 'I can help you with quotes, tracking, scheduling pickups, and more. What would you like to do?');
+                    }
+                }, 500);
+            }
+
+            function loadScenario(scenarioName) {
+                clearChat();
+                currentScenario = scenarios[scenarioName];
+                currentStep = 0;
+                scenarioSelector.value = scenarioName;
+                playScenario();
+            }
+
+            function playScenario() {
+                if (!currentScenario || currentStep >= currentScenario.length) return;
+                
+                const message = currentScenario[currentStep];
+                const delay = message.type === 'user' ? 800 : 1200;
+                
+                if (message.type === 'user') {
+                    showTypingIndicator();
+                }
+                
+                setTimeout(() => {
+                    removeTypingIndicator();
+                    
+                    if (message.html) {
+                        addMessageHTML(message.type, message.html);
+                    } else {
+                        addMessage(message.type, message.text);
+                    }
+                    
+                    currentStep++;
+                    
+                    if (currentStep < currentScenario.length) {
+                        setTimeout(() => playScenario(), 1500);
+                    }
+                }, delay);
+            }
+
+            function addMessage(type, text) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${type}`;
+                messageDiv.innerHTML = `<div class="message-content">${text}</div>`;
+                chatMessages.appendChild(messageDiv);
+                scrollToBottom();
+            }
+
+            function addMessageHTML(type, html) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${type}`;
+                messageDiv.innerHTML = `<div class="message-content">${html}</div>`;
+                chatMessages.appendChild(messageDiv);
+                
+                messageDiv.querySelectorAll('.deep-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const modalType = e.target.dataset.modal;
+                        showModal(modalType);
+                    });
+                });
+                
+                scrollToBottom();
+            }
+
+            function showTypingIndicator() {
+                const indicator = document.createElement('div');
+                indicator.className = 'message ai typing';
+                indicator.innerHTML = `
+                    <div class="message-content typing-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
+                `;
+                chatMessages.appendChild(indicator);
+                scrollToBottom();
+            }
+
+            function removeTypingIndicator() {
+                const indicator = chatMessages.querySelector('.typing');
+                if (indicator) indicator.remove();
+            }
+
+            function clearChat() {
+                chatMessages.innerHTML = `
+                    <div class="message ai">
+                        <div class="message-content">
+                            Hi! I'm Miles, your Amazon Freight expert. I can help you with:
+                            <ul>
+                                <li>Getting quotes and booking shipments</li>
+                                <li>Tracking orders and checking ETAs</li>
+                                <li>Scheduling pickups</li>
+                                <li>Negotiating rates</li>
+                            </ul>
+                            What can I help you with today?
+                        </div>
+                    </div>
+                `;
+                currentScenario = null;
+                currentStep = 0;
+                scenarioSelector.value = '';
+            }
+
+            function trackOrder(orderId) {
+                clearChat();
+                showOrderTracking(orderId);
+            }
+
+            function showOrderTracking(orderId) {
+                const order = orders[orderId];
+                if (!order) {
+                    addMessage('ai', `I couldn't find order ${orderId}. Please check the order ID and try again.`);
+                    return;
+                }
+                
+                let html = `Looking up ${orderId}...<br><br>
+                    <div class="tracking-card">
+                        <h3>Order ${order.id}</h3>
+                        <div style="margin: 0.5rem 0;">${order.freight}, ${order.route}</div>
+                        <div><strong>Status:</strong> <span class="status-badge ${order.status === 'In Transit' ? 'success' : order.status === 'Delayed' ? 'error' : 'warning'}">${order.status}</span></div>`;
+                
+                if (order.currentLocation) {
+                    html += `<div><strong>Current Location:</strong> ${order.currentLocation}</div>`;
+                }
+                
+                if (order.originalETA) {
+                    html += `<div><strong>Original ETA:</strong> ${order.originalETA}</div>`;
+                }
+                
+                if (order.updatedETA) {
+                    html += `<div><strong>Updated ETA:</strong> ${order.updatedETA}</div>`;
+                }
+                
+                if (order.newETA) {
+                    html += `<div><strong>New ETA:</strong> ${order.newETA}</div>`;
+                }
+                
+                if (order.delayReason) {
+                    html += `<div><strong>Reason:</strong> ${order.delayReason}</div>`;
+                }
+                
+                html += `</div>`;
+                
+                if (order.timeline) {
+                    html += `<br>Recent activity:<div class="tracking-timeline">`;
+                    order.timeline.slice(-3).forEach(item => {
+                        html += `<div class="timeline-item"><strong>${item.date}</strong> - ${item.event} (${item.location})</div>`;
+                    });
+                    html += `</div>`;
+                    html += `<a href="#" class="deep-link" data-modal="tracking">View Full Tracking Details →</a>`;
+                }
+                
+                addMessageHTML('ai', html);
+            }
+
+            function showModal(type) {
+                let content = '';
+                
+                if (type === 'booking') {
+                    content = `
+                        <h2>Complete Booking</h2>
+                        <p>This would open the Amazon Freight booking form with your quote pre-filled.</p>
+                        <div style="background: #f9f9f9; padding: 1rem; border-radius: 4px; margin-top: 1rem;">
+                            <h3>Pre-filled Information:</h3>
+                            <ul>
+                                <li>Route: Seattle, WA → Atlanta, GA</li>
+                                <li>Freight: 2 pallets (48x40x60", 800 lbs each)</li>
+                                <li>Service: Standard (5-7 days)</li>
+                                <li>Rate: $789 (negotiated)</li>
+                                <li>Special requirements: Liftgate delivery</li>
+                            </ul>
+                        </div>
+                    `;
+                } else if (type === 'tracking') {
+                    content = `
+                        <h2>Full Tracking Details - AF-29384</h2>
+                        <div style="background: #f9f9f9; padding: 1rem; border-radius: 4px; margin-top: 1rem;">
+                            <h3>Complete Timeline</h3>
+                            <div class="tracking-timeline">
+                                <div class="timeline-item"><strong>Jan 27, 10:04 AM</strong> - Picked up (Seattle, WA)</div>
+                                <div class="timeline-item"><strong>Jan 27, 11:32 AM</strong> - Departed origin terminal</div>
+                                <div class="timeline-item"><strong>Jan 28, 8:15 AM</strong> - In transit (Boise, ID)</div>
+                                <div class="timeline-item"><strong>Jan 29, 6:42 AM</strong> - In transit (Salt Lake City, UT)</div>
+                                <div class="timeline-item"><strong>Jan 29, 7:15 AM</strong> - Departed hub (Salt Lake City, UT)</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                modalBody.innerHTML = content;
+                modal.style.display = 'block';
+            }
+
+            function scrollToBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
