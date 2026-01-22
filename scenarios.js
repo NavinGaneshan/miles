@@ -1,5 +1,92 @@
 // Scenario definitions
 const scenarios = {
+    multimodal: [
+        { type: 'user', text: 'I need high-speed shipping from Phoenix to New York - within 2 days if possible' },
+        { type: 'ai', text: 'I can help with that. Let me check expedited options for Phoenix to New York.<br><br>What type of freight are you shipping and approximate weight?' },
+        { type: 'user', text: '3 pallets, about 2,400 lbs total' },
+        { 
+            type: 'ai', 
+            html: `Perfect. For a 2-day delivery, I have a multimodal solution that combines ground and air:
+                <div class="quote-card">
+                    <div class="quote-option">
+                        <strong>Multimodal Express (46 hours): $24,500</strong>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            <div><strong>Leg 1:</strong> LTL Pickup Phoenix → PHX7 Air Hub (4 hrs)</div>
+                            <div><strong>Leg 2:</strong> Air Cargo PHX7 → JFK9 (5 hrs)</div>
+                            <div><strong>Leg 3:</strong> LTL Delivery JFK9 → New York (2 hrs)</div>
+                            <div style="margin-top: 0.5rem; color: #666;">+ 35 hrs processing/handling time</div>
+                        </div>
+                    </div>
+                </div>
+                This is premium service for time-critical freight. Would you like to see a more economical option?`
+        },
+        { type: 'user', text: 'Yes, what else do you have?' },
+        { 
+            type: 'ai', 
+            html: `Here's a standard ground option:
+                <div class="quote-card">
+                    <div class="quote-option">
+                        <strong>Full Truckload (75 hours): $7,560</strong>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            <div>Direct truck Phoenix → New York</div>
+                            <div>Estimated delivery: 3.1 days</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; padding: 0.75rem; background: #f0f8ff; border-left: 3px solid #0073bb; border-radius: 4px;">
+                    <strong>Cost comparison:</strong><br>
+                    Multimodal saves ~29 hours but costs $16,940 more<br>
+                    Ground option is 68% less expensive
+                </div>
+                Which option works better for your timeline and budget?`
+        },
+        { type: 'user', text: 'The multimodal is expensive but I need it fast. Can you break down the costs?' },
+        { 
+            type: 'ai', 
+            html: `Here's the cost breakdown for the Multimodal Express option:
+                <div class="quote-card">
+                    <div style="padding: 1rem; background: #fafafa; border-radius: 4px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Leg 1: LTL Pickup (Phoenix → PHX7)</span>
+                            <strong>$850</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Leg 2: Air Cargo (PHX7 → JFK9)</span>
+                            <strong>$21,200</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Leg 3: LTL Delivery (JFK9 → New York)</span>
+                            <strong>$950</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Handling & Coordination</span>
+                            <strong>$1,200</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Insurance (2,400 lbs @ $50/lb)</span>
+                            <strong>$300</strong>
+                        </div>
+                        <div style="border-top: 2px solid #ddd; margin-top: 0.5rem; padding-top: 0.5rem; display: flex; justify-content: space-between; font-size: 1.1rem;">
+                            <strong>Total</strong>
+                            <strong>$24,500</strong>
+                        </div>
+                    </div>
+                </div>
+                The air cargo leg is the primary cost driver. Would you like to proceed with this option?`
+        },
+        { type: 'user', text: 'Yes, book the multimodal express' },
+        { 
+            type: 'ai', 
+            html: `Excellent! I'll set up your multimodal shipment. I need:
+                <ul>
+                    <li>Pickup address & contact in Phoenix</li>
+                    <li>Delivery address & contact in New York</li>
+                    <li>Commodity description (for air cargo compliance)</li>
+                    <li>Preferred pickup date/time</li>
+                </ul>
+                <a href="#" class="deep-link" data-modal="booking">Complete Booking Form →</a>`
+        }
+    ],
     quote: [
         { type: 'user', text: 'I need to ship 2 pallets from Seattle to Atlanta next week' },
         { type: 'ai', text: 'I can help you get a quote. Let me gather some details:<br><br><strong>Origin:</strong> Seattle, WA<br><strong>Destination:</strong> Atlanta, GA<br><strong>Freight:</strong> 2 pallets<br><strong>Timeframe:</strong> Next week<br><br>What are the dimensions and weight of each pallet?' },
