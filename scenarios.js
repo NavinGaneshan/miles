@@ -421,5 +421,62 @@ const scenarios = {
                 </div>
                 Confirmation and BOL sent to your email. You'll get a call 30 min before pickup.`
         }
+    ],
+
+    missedpickup: [
+        { type: 'user', text: 'Our pickup was missed today for order AF-32194' },
+        { type: 'ai', text: 'I apologize for the inconvenience. Let me look into this right away. Can you confirm the site location where the pickup was scheduled?' },
+        { type: 'user', text: 'Portland warehouse, 2850 NW Industrial St' },
+        { 
+            type: 'ai', 
+            html: `Checking order AF-32194 and pickup status...<br><br>
+                <div class="tracking-card">
+                    <h3>Order AF-32194</h3>
+                    <div style="margin: 0.5rem 0;">Portland, OR → Sacramento, CA</div>
+                    <div><strong>Scheduled pickup:</strong> Today, Jan 22, 10 AM - 2 PM</div>
+                    <div><strong>Status:</strong> <span class="status-badge error">Pickup Delayed</span></div>
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: #fff3cd; border-left: 3px solid #ffc107; border-radius: 4px;">
+                        <strong>Reason:</strong> Driver arrived but was unable to complete pickup. Your shipment requires a trailer with roll doors for loading access, but the assigned trailer had swing doors. We're working to dispatch a compliant trailer.
+                    </div>
+                </div>
+                I can reschedule this for you today. Would you like to see available time slots?`
+        },
+        { type: 'user', text: 'Yes, we need this picked up today' },
+        { 
+            type: 'ai', 
+            html: `I have two options available today with roll-door trailers:
+                <div class="quote-card">
+                    <div class="quote-option">
+                        <strong>Option 1: 3:00 PM - 5:00 PM</strong>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            <div>Driver: Unit 847 (roll-door trailer confirmed)</div>
+                            <div>ETA to your location: 2:45 PM</div>
+                        </div>
+                    </div>
+                    <div class="quote-option">
+                        <strong>Option 2: 5:30 PM - 7:30 PM</strong>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            <div>Driver: Unit 923 (roll-door trailer confirmed)</div>
+                            <div>ETA to your location: 5:15 PM</div>
+                        </div>
+                    </div>
+                </div>
+                Which time works better for your team?`
+        },
+        { type: 'user', text: 'The 3 PM slot works' },
+        { 
+            type: 'ai', 
+            html: `<div class="action-card">
+                    <span class="status-badge success">✓ Pickup rescheduled</span>
+                    <ul style="margin-top: 0.5rem;">
+                        <li><strong>Order:</strong> AF-32194</li>
+                        <li><strong>New pickup time:</strong> Today, Jan 22, 3:00 PM - 5:00 PM</li>
+                        <li><strong>Location:</strong> 2850 NW Industrial St, Portland, OR</li>
+                        <li><strong>Driver:</strong> Unit 847 (roll-door trailer)</li>
+                        <li><strong>Driver ETA:</strong> 2:45 PM</li>
+                    </ul>
+                </div>
+                Your contact will receive a call 30 minutes before arrival. I've also applied a service credit to your account for the inconvenience. Is there anything else I can help with?`
+        }
     ]
 };
