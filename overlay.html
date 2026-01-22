@@ -397,8 +397,9 @@
                         const modalType = e.target.dataset.modal;
                         if (modalType === 'booking') {
                             document.body.style.backgroundImage = "url('BookingFlow.png')";
+                        } else {
+                            showModal(modalType);
                         }
-                        showModal(modalType);
                     });
                 });
                 
