@@ -51,13 +51,17 @@
             background: white;
             box-shadow: -4px 0 20px rgba(0,0,0,0.3);
             z-index: 999;
-            transition: right 0.3s ease-in-out;
+            transition: right 0.3s ease-in-out, width 0.3s ease-in-out;
             display: flex;
             flex-direction: column;
         }
 
         .chat-overlay.open {
             right: 0;
+        }
+
+        .chat-overlay.fullscreen {
+            width: 100%;
         }
 
         .chat-overlay-header {
@@ -74,7 +78,12 @@
             font-size: 1.25rem;
         }
 
-        .close-btn {
+        .header-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .expand-btn, .close-btn {
             background: transparent;
             border: none;
             color: white;
@@ -88,7 +97,7 @@
             justify-content: center;
         }
 
-        .close-btn:hover {
+        .expand-btn:hover, .close-btn:hover {
             opacity: 0.8;
         }
 
@@ -184,7 +193,10 @@
     <div class="chat-overlay" id="chatOverlay">
         <div class="chat-overlay-header">
             <h2>Miles, your freight expert</h2>
-            <button class="close-btn" id="closeBtn">&times;</button>
+            <div class="header-buttons">
+                <button class="expand-btn" id="expandBtn" title="Expand">⛶</button>
+                <button class="close-btn" id="closeBtn">&times;</button>
+            </div>
         </div>
         
         <div class="chat-overlay-content">
@@ -278,6 +290,7 @@
             const chatFab = document.getElementById('chatFab');
             const chatOverlay = document.getElementById('chatOverlay');
             const closeBtn = document.getElementById('closeBtn');
+            const expandBtn = document.getElementById('expandBtn');
             const backdrop = document.getElementById('backdrop');
             const demoNotice = document.getElementById('demoNotice');
             const dismissNotice = document.getElementById('dismissNotice');
@@ -293,7 +306,14 @@
 
             closeBtn.addEventListener('click', () => {
                 chatOverlay.classList.remove('open');
+                chatOverlay.classList.remove('fullscreen');
                 backdrop.classList.remove('visible');
+                expandBtn.textContent = '⛶';
+            });
+
+            expandBtn.addEventListener('click', () => {
+                chatOverlay.classList.toggle('fullscreen');
+                expandBtn.textContent = chatOverlay.classList.contains('fullscreen') ? '⛶' : '⛶';
             });
 
             backdrop.addEventListener('click', () => {
