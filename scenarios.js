@@ -570,5 +570,59 @@ const scenarios = {
                     Full documentation including signatures and photos available upon request.
                 </div>`
         }
+    ],
+
+    escalation: [
+        { type: 'user', text: 'I need to reschedule my pickup for today - order AF-33582' },
+        { type: 'ai', text: 'I can help with that. Let me check the current pickup details for AF-33582...' },
+        { 
+            type: 'ai', 
+            html: `<div class="tracking-card">
+                    <h3>Order AF-33582</h3>
+                    <div style="margin: 0.5rem 0;">Chicago, IL → Boston, MA</div>
+                    <div><strong>Current pickup:</strong> Today, Jan 24, 2:00 PM - 4:00 PM</div>
+                    <div><strong>Location:</strong> 350 N Orleans St, Chicago, IL</div>
+                    <div><strong>Freight:</strong> 4 pallets, 3,200 lbs</div>
+                </div>
+                What time would you like to reschedule for?`
+        },
+        { type: 'user', text: 'We need it picked up earlier today, like 10 AM to noon' },
+        { type: 'ai', text: 'Let me check same-day availability for a 10 AM - 12 PM window...' },
+        { 
+            type: 'ai', 
+            html: `<div style="padding: 0.75rem; background: #fff3cd; border-left: 3px solid #ffc107; border-radius: 4px;">
+                    <strong>⚠ Limited Capacity</strong><br>
+                    I'm unable to confirm same-day pickup for the 10 AM - 12 PM window. Our Chicago area is at capacity for morning slots today.
+                </div>
+                <div style="margin-top: 1rem;">
+                    I can offer these alternatives:
+                    <ul>
+                        <li><strong>Tomorrow morning:</strong> Jan 25, 8 AM - 12 PM (guaranteed)</li>
+                        <li><strong>Today evening:</strong> Jan 24, 6 PM - 8 PM (available)</li>
+                    </ul>
+                </div>
+                Would either of these work, or would you like me to connect you with a specialist who can explore additional options?`
+        },
+        { type: 'user', text: 'I really need it today. Can someone help find a solution?' },
+        { 
+            type: 'ai', 
+            html: `<div style="padding: 0.75rem; background: #e7f3ff; border-left: 3px solid #0073bb; border-radius: 4px;">
+                    <strong>Connecting you to a specialist...</strong><br>
+                    I'm transferring you to our capacity team who can work on securing same-day pickup options.
+                </div>`
+        },
+        { 
+            type: 'ai', 
+            html: `<div style="padding: 1rem; background: #f0f8ff; border: 2px solid #0073bb; border-radius: 8px; margin-top: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <div style="width: 40px; height: 40px; background: #0073bb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">A</div>
+                        <div>
+                            <strong>Alejandro Martinez</strong><br>
+                            <span style="font-size: 0.9rem; color: #666;">Capacity Specialist</span>
+                        </div>
+                    </div>
+                    Hi, I'm Alejandro, happy to assist further here. Let me see how we can reschedule for the same day...
+                </div>`
+        }
     ]
 };
