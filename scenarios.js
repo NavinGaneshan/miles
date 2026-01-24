@@ -504,7 +504,13 @@ const scenarios = {
                         <strong>1. Loading & Pickup</strong><br>
                         <strong>Date/Time:</strong> Jan 15, 2026 09:23 AM PST<br>
                         <strong>Location:</strong> 1918 8th Ave, Seattle, WA 98101<br>
-                        <img src="https://staticmap.openstreetmap.de/staticmap.php?center=47.6149,-122.3386&zoom=14&size=300x150&markers=47.6149,-122.3386,red-pushpin" alt="Pickup location" style="width: 100%; max-width: 300px; margin: 0.5rem 0; border-radius: 4px; border: 1px solid #ddd;"><br>
+                        <div style="width: 100%; max-width: 300px; height: 150px; margin: 0.5rem 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 4px; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem;">📍</div>
+                                <div style="font-size: 0.9rem; margin-top: 0.5rem;">Seattle, WA</div>
+                                <div style="font-size: 0.75rem; opacity: 0.9;">47.6149°N, 122.3386°W</div>
+                            </div>
+                        </div>
                         <strong>Handler:</strong> Sarah Chen (Shipper) - Signature verified<br>
                         <strong>Driver:</strong> Marcus Johnson (CDL: WA-8847392) - Unit 624<br>
                         <strong>Carrier:</strong> Amazon Freight (USDOT: 3924847)<br>
@@ -548,7 +554,13 @@ const scenarios = {
                         <strong>5. Final Delivery</strong><br>
                         <strong>Date/Time:</strong> Jan 19, 2026 10:18 AM EST<br>
                         <strong>Location:</strong> 1450 Brickell Ave, Miami, FL 33131<br>
-                        <img src="https://staticmap.openstreetmap.de/staticmap.php?center=25.7617,-80.1918&zoom=14&size=300x150&markers=25.7617,-80.1918,green-pushpin" alt="Delivery location" style="width: 100%; max-width: 300px; margin: 0.5rem 0; border-radius: 4px; border: 1px solid #ddd;"><br>
+                        <div style="width: 100%; max-width: 300px; height: 150px; margin: 0.5rem 0; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border-radius: 4px; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem;">📍</div>
+                                <div style="font-size: 0.9rem; margin-top: 0.5rem;">Miami, FL</div>
+                                <div style="font-size: 0.75rem; opacity: 0.9;">25.7617°N, 80.1918°W</div>
+                            </div>
+                        </div>
                         <strong>Driver:</strong> Carlos Rodriguez (CDL: FL-8392847)<br>
                         <strong>Receiver:</strong> Dr. Amanda Foster (Receiving Manager) - Signature verified<br>
                         <strong>Security:</strong> Seal #AF-28471-003 verified intact, broken at delivery<br>
