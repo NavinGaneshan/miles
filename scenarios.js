@@ -711,9 +711,12 @@ const scenarios = {
                     <div style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Format: Origin, Destination, Class</div>
                     
                     <div style="margin-bottom: 0.5rem;"><strong>Option 3: Lanes + Class + Weight</strong></div>
-                    <div style="font-size: 0.9rem; color: #666;">Format: Origin, Destination, Class, Weight (lbs)</div>
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Format: Origin, Destination, Class, Weight (lbs)</div>
+                    
+                    <div style="margin-bottom: 0.5rem;"><strong>Option 4: Upload Excel file</strong></div>
+                    <div style="font-size: 0.9rem; color: #666;">Upload .xlsx or .csv with columns: Origin, Destination, Class, Weight</div>
                 </div>
-                Which option works for you? (1, 2, or 3)`
+                Which option works for you? (1, 2, 3, or 4)`
         },
         { type: 'user', text: '3' },
         { 
