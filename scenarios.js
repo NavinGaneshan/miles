@@ -696,5 +696,108 @@ const scenarios = {
                 </div>
                 Updated BOL has been sent to your email. The driver will have the complete PO list for pickup.`
         }
+    ],
+
+    bulkquote: [
+        { type: 'user', text: 'I need quotes for multiple shipments at once' },
+        { 
+            type: 'ai', 
+            html: `I can help you get bulk quotes. What level of detail do you want to provide?
+                <div class="quote-card" style="margin-top: 1rem;">
+                    <div style="margin-bottom: 0.5rem;"><strong>Option 1: Lanes only</strong></div>
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Format: Origin, Destination</div>
+                    
+                    <div style="margin-bottom: 0.5rem;"><strong>Option 2: Lanes + Freight Class</strong></div>
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Format: Origin, Destination, Class</div>
+                    
+                    <div style="margin-bottom: 0.5rem;"><strong>Option 3: Lanes + Class + Weight</strong></div>
+                    <div style="font-size: 0.9rem; color: #666;">Format: Origin, Destination, Class, Weight (lbs)</div>
+                </div>
+                Which option works for you? (1, 2, or 3)`
+        },
+        { type: 'user', text: '3' },
+        { 
+            type: 'ai', 
+            text: `Perfect! Please paste your shipments in this format:<br>
+                <strong>Origin, Destination, Class, Weight</strong><br><br>
+                Example:<br>
+                <code style="background: #f5f5f5; padding: 0.5rem; display: block; margin-top: 0.5rem;">
+                Seattle WA, Atlanta GA, 70, 1200<br>
+                Dallas TX, Boston MA, 85, 800<br>
+                Phoenix AZ, Miami FL, 60, 2400
+                </code>`
+        },
+        { 
+            type: 'user', 
+            text: `Seattle WA, Atlanta GA, 70, 1200
+Dallas TX, Boston MA, 85, 800
+Phoenix AZ, Miami FL, 60, 2400
+Chicago IL, Los Angeles CA, 77.5, 1600
+Portland OR, New York NY, 92.5, 950` 
+        },
+        { type: 'ai', text: 'Processing 5 shipments... Calculating rates for each lane...' },
+        { 
+            type: 'ai', 
+            html: `<div class="tracking-card">
+                    <h3>Bulk Quote Results</h3>
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Generated: Jan 28, 2026</div>
+                    
+                    <div style="margin-bottom: 1rem; padding: 0.75rem; background: #f9f9f9; border-radius: 4px;">
+                        <strong>1. Seattle, WA → Atlanta, GA</strong><br>
+                        <div style="margin-top: 0.25rem; font-size: 0.9rem;">Class 70, 1,200 lbs</div>
+                        <div style="margin-top: 0.5rem;">
+                            <strong>Standard (5-7 days):</strong> $847<br>
+                            <strong>Expedited (3-4 days):</strong> $1,124
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem; padding: 0.75rem; background: #f9f9f9; border-radius: 4px;">
+                        <strong>2. Dallas, TX → Boston, MA</strong><br>
+                        <div style="margin-top: 0.25rem; font-size: 0.9rem;">Class 85, 800 lbs</div>
+                        <div style="margin-top: 0.5rem;">
+                            <strong>Standard (5-7 days):</strong> $692<br>
+                            <strong>Expedited (3-4 days):</strong> $921
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem; padding: 0.75rem; background: #f9f9f9; border-radius: 4px;">
+                        <strong>3. Phoenix, AZ → Miami, FL</strong><br>
+                        <div style="margin-top: 0.25rem; font-size: 0.9rem;">Class 60, 2,400 lbs</div>
+                        <div style="margin-top: 0.5rem;">
+                            <strong>Standard (6-8 days):</strong> $1,456<br>
+                            <strong>Expedited (4-5 days):</strong> $1,947
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem; padding: 0.75rem; background: #f9f9f9; border-radius: 4px;">
+                        <strong>4. Chicago, IL → Los Angeles, CA</strong><br>
+                        <div style="margin-top: 0.25rem; font-size: 0.9rem;">Class 77.5, 1,600 lbs</div>
+                        <div style="margin-top: 0.5rem;">
+                            <strong>Standard (5-7 days):</strong> $1,124<br>
+                            <strong>Expedited (3-4 days):</strong> $1,498
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem; padding: 0.75rem; background: #f9f9f9; border-radius: 4px;">
+                        <strong>5. Portland, OR → New York, NY</strong><br>
+                        <div style="margin-top: 0.25rem; font-size: 0.9rem;">Class 92.5, 950 lbs</div>
+                        <div style="margin-top: 0.5rem;">
+                            <strong>Standard (6-8 days):</strong> $1,247<br>
+                            <strong>Expedited (4-5 days):</strong> $1,663
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: #e7f3ff; border-left: 3px solid #0073bb; border-radius: 4px;">
+                        <strong>Summary:</strong><br>
+                        Total shipments: 5<br>
+                        Combined standard rate: $5,366<br>
+                        Combined expedited rate: $7,153<br>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            💡 Volume discount available: Book all 5 and save 8% ($429 off standard rates)
+                        </div>
+                    </div>
+                </div>
+                Would you like to book any of these shipments?`
+        }
     ]
 };
