@@ -636,5 +636,65 @@ const scenarios = {
                     Hi, I'm Alejandro, happy to assist further here. Let me see how we can reschedule for the same day...
                 </div>`
         }
+    ],
+
+    addpos: [
+        { type: 'user', text: 'I need to add more POs to order AF-31205' },
+        { type: 'ai', text: 'I can help you add purchase orders to AF-31205. Let me pull up the current order details...' },
+        { 
+            type: 'ai', 
+            html: `<div class="tracking-card">
+                    <h3>Order AF-31205</h3>
+                    <div style="margin: 0.5rem 0;">Dallas, TX → Boston, MA</div>
+                    <div><strong>Status:</strong> <span class="status-badge warning">Ready to Ship</span></div>
+                    <div><strong>Pickup scheduled:</strong> Jan 29, 8 AM - 12 PM</div>
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: #f9f9f9; border-radius: 4px;">
+                        <strong>Current POs attached:</strong>
+                        <ul style="margin: 0.5rem 0;">
+                            <li>PO-8847392 (Electronics, 2 pallets)</li>
+                            <li>PO-8847401 (Office supplies, 1 pallet)</li>
+                        </ul>
+                        <div style="margin-top: 0.5rem; color: #666;">Total: 3 pallets, 2,100 lbs</div>
+                    </div>
+                </div>
+                What PO numbers would you like to add?`
+        },
+        { type: 'user', text: 'Add PO-8847518 and PO-8847523' },
+        { type: 'ai', text: 'Got it. Can you provide details for these POs? I need the commodity type and approximate weight/dimensions for each.' },
+        { type: 'user', text: 'PO-8847518 is computer hardware, 1 pallet about 450 lbs. PO-8847523 is monitors, 2 pallets about 800 lbs total' },
+        { 
+            type: 'ai', 
+            html: `Let me verify the updated shipment details:<br><br>
+                <div class="quote-card">
+                    <strong>Adding to Order AF-31205:</strong>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>PO-8847518: Computer hardware, 1 pallet, 450 lbs</li>
+                        <li>PO-8847523: Monitors, 2 pallets, 800 lbs</li>
+                    </ul>
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: #f0f8ff; border-left: 3px solid #0073bb; border-radius: 4px;">
+                        <strong>Updated shipment totals:</strong><br>
+                        <div style="margin-top: 0.5rem;">
+                            Previous: 3 pallets, 2,100 lbs<br>
+                            New: 6 pallets, 3,350 lbs<br>
+                            <strong>Change:</strong> +3 pallets, +1,250 lbs
+                        </div>
+                    </div>
+                </div>
+                The additional freight fits within your current truck capacity. Should I update the order?`
+        },
+        { type: 'user', text: 'Yes, update it' },
+        { 
+            type: 'ai', 
+            html: `<div class="action-card">
+                    <span class="status-badge success">✓ Order updated: AF-31205</span>
+                    <ul style="margin-top: 0.5rem;">
+                        <li><strong>POs attached:</strong> 4 total (added PO-8847518, PO-8847523)</li>
+                        <li><strong>Updated freight:</strong> 6 pallets, 3,350 lbs</li>
+                        <li><strong>Pickup:</strong> Jan 29, 8 AM - 12 PM (unchanged)</li>
+                        <li><strong>Rate:</strong> $1,247 (no additional charge - within capacity)</li>
+                    </ul>
+                </div>
+                Updated BOL has been sent to your email. The driver will have the complete PO list for pickup.`
+        }
     ]
 };
