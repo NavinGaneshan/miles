@@ -45,8 +45,8 @@
         .chat-overlay {
             position: fixed;
             top: 0;
-            right: -50%;
-            width: 50%;
+            right: -33.33%;
+            width: 33.33%;
             height: 100%;
             background: white;
             box-shadow: -4px 0 20px rgba(0,0,0,0.3);
@@ -60,7 +60,15 @@
             right: 0;
         }
 
-        .chat-overlay.fullscreen {
+        .chat-overlay.width-third {
+            width: 33.33%;
+        }
+
+        .chat-overlay.width-half {
+            width: 50%;
+        }
+
+        .chat-overlay.width-full {
             width: 100%;
         }
 
@@ -81,9 +89,38 @@
         .header-buttons {
             display: flex;
             gap: 0.5rem;
+            align-items: center;
         }
 
-        .expand-btn, .close-btn {
+        .width-controls {
+            display: flex;
+            gap: 0.25rem;
+            margin-right: 1rem;
+            border-right: 1px solid rgba(255,255,255,0.3);
+            padding-right: 1rem;
+        }
+
+        .width-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            font-size: 0.75rem;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+
+        .width-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .width-btn.active {
+            background: #ff9900;
+            border-color: #ff9900;
+        }
+
+        .close-btn {
             background: transparent;
             border: none;
             color: white;
@@ -97,7 +134,7 @@
             justify-content: center;
         }
 
-        .expand-btn:hover, .close-btn:hover {
+        .close-btn:hover {
             opacity: 0.8;
         }
 
@@ -192,11 +229,15 @@
     </div>
 
     <!-- Chat Overlay Panel -->
-    <div class="chat-overlay" id="chatOverlay">
+    <div class="chat-overlay width-third" id="chatOverlay">
         <div class="chat-overlay-header">
             <h2>Miles, your freight expert</h2>
             <div class="header-buttons">
-                <button class="expand-btn" id="expandBtn" title="Expand">⛶</button>
+                <div class="width-controls">
+                    <button class="width-btn active" id="widthThird" title="One-third width">⅓</button>
+                    <button class="width-btn" id="widthHalf" title="Half width">½</button>
+                    <button class="width-btn" id="widthFull" title="Full width">1</button>
+                </div>
                 <button class="close-btn" id="closeBtn">&times;</button>
             </div>
         </div>
@@ -294,7 +335,9 @@
             const chatFab = document.getElementById('chatFab');
             const chatOverlay = document.getElementById('chatOverlay');
             const closeBtn = document.getElementById('closeBtn');
-            const expandBtn = document.getElementById('expandBtn');
+            const widthThird = document.getElementById('widthThird');
+            const widthHalf = document.getElementById('widthHalf');
+            const widthFull = document.getElementById('widthFull');
             const backdrop = document.getElementById('backdrop');
             const demoNotice = document.getElementById('demoNotice');
             const dismissNotice = document.getElementById('dismissNotice');
@@ -305,21 +348,30 @@
 
             chatFab.addEventListener('click', () => {
                 chatOverlay.classList.add('open');
-                chatOverlay.classList.add('fullscreen');
                 backdrop.classList.add('visible');
             });
 
             closeBtn.addEventListener('click', () => {
                 chatOverlay.classList.remove('open');
-                chatOverlay.classList.remove('fullscreen');
                 backdrop.classList.remove('visible');
-                expandBtn.textContent = '⛶';
             });
 
-            expandBtn.addEventListener('click', () => {
-                chatOverlay.classList.toggle('fullscreen');
-                expandBtn.textContent = chatOverlay.classList.contains('fullscreen') ? '⛶' : '⛶';
-            });
+            function setWidth(width) {
+                chatOverlay.classList.remove('width-third', 'width-half', 'width-full');
+                chatOverlay.classList.add(`width-${width}`);
+                
+                widthThird.classList.remove('active');
+                widthHalf.classList.remove('active');
+                widthFull.classList.remove('active');
+                
+                if (width === 'third') widthThird.classList.add('active');
+                if (width === 'half') widthHalf.classList.add('active');
+                if (width === 'full') widthFull.classList.add('active');
+            }
+
+            widthThird.addEventListener('click', () => setWidth('third'));
+            widthHalf.addEventListener('click', () => setWidth('half'));
+            widthFull.addEventListener('click', () => setWidth('full'));
 
             backdrop.addEventListener('click', () => {
                 chatOverlay.classList.remove('open');
